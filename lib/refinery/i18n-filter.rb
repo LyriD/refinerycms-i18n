@@ -2,19 +2,10 @@ module RoutingFilter
   class RefineryLocales < Filter
 
     def around_recognize(path, env, &block)
-      if ::Refinery::I18n.url_filter_enabled? || ::Refinery::I18n.domain_name_enabled?
-        if ::Refinery::I18n.domain_name_enabled?
-          hostname = env['HTTP_HOST'].sub(/:\d+$/, '')
-          ::I18n.locale = ::Refinery::I18n.domains_locales[hostname] || ::Refinery::I18n.default_frontend_locale
-        elsif path =~ %r{^/(#{::Refinery::I18n.locales.keys.join('|')})(/|$)}
-          path.sub! %r(^/(([a-zA-Z\-_])*)(?=/|$)) do
-            ::I18n.locale = $1
-            ''
-          end
-          path.sub!(%r{^$}) { '/' }
+      if request.host_with_port == 'ybw.dev.maniaco.ru:3000'
+          ::I18n.locale = :en
         else
           ::I18n.locale = ::Refinery::I18n.default_frontend_locale
-        end
       end
 
       yield.tap do |params|
