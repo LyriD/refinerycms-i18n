@@ -4,7 +4,8 @@ module RoutingFilter
     def around_recognize(path, env, &block)
         if true
           hostname = env['HTTP_HOST'].sub(/:\d+$/, '')
-          ::I18n.locale = ::Refinery::I18n.domains_locales[hostname] || ::Refinery::I18n.default_frontend_locale
+          # ::I18n.locale = ::Refinery::I18n.domains_locales[hostname] || ::Refinery::I18n.default_frontend_locale
+          ::I18n.locale = :en
         elsif path =~ %r{^/(#{::Refinery::I18n.locales.keys.join('|')})(/|$)}
           path.sub! %r(^/(([a-zA-Z\-_])*)(?=/|$)) do
             ::I18n.locale = $1
