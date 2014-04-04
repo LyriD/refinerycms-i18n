@@ -15,7 +15,12 @@ module RoutingFilter
         else
           ::I18n.locale = ::Refinery::I18n.default_frontend_locale
         end
-        ::I18n.locale = :en
+        
+        if env['HTTP_HOST'].sub(/:\d+$/, '') == 'ybw.dev.maniaco.ru:3000'
+         ::I18n.locale = :en 
+      else
+        ::I18n.locale = :ru
+      end
       yield.tap do |params|
         params[:locale] = ::I18n.locale if ::Refinery::I18n.enabled?
       end
