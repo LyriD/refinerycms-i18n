@@ -16,7 +16,7 @@ module RoutingFilter
           ::I18n.locale = ::Refinery::I18n.default_frontend_locale
         end
         
-        if env['HTTP_HOST'].sub(/:\d+$/, '') == 'ybw.dev.maniaco.ru'
+        if env['HTTP_HOST'].sub(/:\d+$/, '') == 'ybw-group.com'
          ::I18n.locale = :en 
       else
         ::I18n.locale = :ru
